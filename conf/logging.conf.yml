@@ -1,0 +1,20 @@
+version: 1
+disable_existing_loggers: no
+formatters:
+    console: # задает форматтер с именем "console"
+    (): webapp.logger.ConsoleFormatter # вместо деолтного logging.Formatter
+handlers:
+    console:
+    class: logging.StreamHandler # отправляет логи в стандартный поток вывода
+    formatter: console # форматирование сообщений перед отправкой в поток вывода
+root:
+    level: INFO
+    handlers: [console]
+loggers:
+    'web_app':
+    level: INFO
+    propagate: yes
+    'uvicorn':
+    level: INFO
+    propagate: yes # сообщения этого логгера должны также распространяться на родительский логгер
+    handlers: [console]

@@ -1,0 +1,30 @@
+target-version = "py38"
+src = ["webapp", "tests"]
+
+line-length = 109
+
+[lint]
+select = [
+    # flake8-annotations
+    "ANN001",
+    "ANN201",
+    # pycodestyle - errors and warnings
+    "E",
+    "W",
+    # Pyflakes errors
+    "F",
+    # pyupgrade - syntax updating
+    "UP",
+    # flake8-simplify
+    "SIM",
+    # isort - imports
+    "I",
+    # pep8-naming
+    "N",
+]
+
+[lint.extend-per-file-ignores]
+"test_*.py" = ["E501", "ANN001", "ANN201", "D102", "D103"]
+
+[lint.isort]
+known-local-folder = ["webapp", "tests"]

@@ -1,0 +1,106 @@
+Команды:
+
+# сделать скрипт исполняемым:
+chmod +x setup.sh
+chmod +x scripts/web/startup.sh
+
+# запуск скрипта
+./setup.sh
+./scripts/web/startup.sh
+
+# проверка скрипта
+bash setup.sh
+bash scripts/web/startup.sh
+     
+# добавить network
+docker network create sirius_network
+
+# скачать pytest
+pip install pytest-cov
+
+# Установка fastapi
+pip install fastapi uvicorn
+
+# Остановить все контейнеры и удалить их
+docker-compose down
+
+# Удалить все образы, связанные с проектом
+docker-compose rm -f
+
+# Собрать проект заново
+docker-compose build --no-cache
+
+# Запустить проект
+docker-compose up
+
+# доступ к базе
+psql -h localhost -p 5433 -U postgres -d main_db 
+\l
+\dt
+
+# Добавить non-root
+To create a Docker group, you can use the following command.
+`sudo groupadd docker`
+Now, to create a non-root user and add it to the docker group, you can use the following command.
+`sudo useradd -G docker <user-name>`
+After that, you can assign a password to the user using the following command.
+`sudo passwd user`
+
+Установка:
+sudo snap install pycharm-community --classic
+https://docs.docker.com/engine/install/ubuntu/
+http://prometheus:9090
+https://github.com/Linapush/for_web/blob/master/startup.sh
+https://habr.com/ru/companies/slurm/articles/741670/
+pip install passlib
+
+poetry:
+curl -sSL https://install.python-poetry.org | python3 -
+poetry install --with dev
+$HOME/.local/bin/poetry
+
+права доступа внутри докер контейнера:
+docker compose run --rm finweb /bin/bash 
+ls -l /code/scripts/web/startup.sh
+chmod +x scripts/web/startup.sh
+
+psql -U postgres -h web_db -p 5432 -d main_db
+pg_isready -U postgres -d main_db
+
+проверка контейнера:
+docker exec -it nginx nginx -t
+docker exec -it nginx curl http://finweb:8000/metrics
+
+проверка по линтеру:
+poetry run ruff --version
+poetry run ruff check .
+ruff check .
+ruff check . --fix
+ruff check <путь_к_файлу>.py --fix
+
+settings.json:
+"editor.codeActionsOnSave": {
+    "source.fixAll.ruff": true
+},
+"ruff.organizeImportsOnSave": true
+
+-- Создание таблиц для миграций
+CREATE SCHEMA IF NOT EXISTS sirius;
+
+CREATE TABLE IF NOT EXISTS sirius.user (
+    id INT PRIMARY KEY,
+    username BIGINT UNIQUE,
+    tg VARCHAR(255),
+    code VARCHAR(255),
+    address VARCHAR(255),
+    role VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS sirius.task (
+    id INT PRIMARY KEY,
+    title VARCHAR(255),
+    status TEXT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES sirius.user(id) ON DELETE CASCADE
+);
+
